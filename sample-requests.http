@@ -3,7 +3,7 @@ POST http://localhost:8080/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test2@mailinator.com",
+  "email": "test@mailinator.com",
   "name": "Test",
   "password": "123456"
 }
@@ -24,3 +24,40 @@ GET http://localhost:8080/api/auth/me
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
+### Get all user related cashboxes
+GET http://localhost:8080/api/cash-boxes
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### Create a new Cashbox
+POST http://localhost:8080/api/cash-boxes
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "New Test Cash Box",
+  "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+}
+
+### Show cashbox with id 1
+GET http://localhost:8080/api/cash-boxes/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Update cashbox with id 1
+PUT http://localhost:8080/api/cash-boxes/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Test Cash Box",
+  "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+}
+
+### Delete cashbox with id 1
+DELETE http://localhost:8080/api/cash-boxes/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}

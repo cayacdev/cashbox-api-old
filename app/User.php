@@ -3,8 +3,8 @@
 namespace App;
 
 use Hash;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -32,7 +32,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Automatically creates hash for the user password.
      *
-     * @param  string  $value
+     * @param string $value
      * @return void
      */
     public function setPasswordAttribute($value)
@@ -58,5 +58,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function cashBoxes()
+    {
+        return $this->belongsToMany('App\CashBox');
     }
 }
