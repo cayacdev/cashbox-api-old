@@ -14,4 +14,9 @@ class CashBox extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function budgetPlans()
+    {
+        return $this->hasMany('App\CashBoxBudgetPlan');
+    }
 }

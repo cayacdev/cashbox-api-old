@@ -19,11 +19,23 @@ $api->version('v1', function (Router $api) {
     });
 
     $api->group(['prefix' => 'cash-boxes'], function (Router $api) {
-        $api->get('', 'App\\Api\\V1\\Controllers\\CashBoxController@index');
-        $api->get('{id}', 'App\\Api\\V1\\Controllers\\CashBoxController@show');
-        $api->post('', 'App\\Api\\V1\\Controllers\\CashBoxController@store');
-        $api->put('{id}', 'App\\Api\\V1\\Controllers\\CashBoxController@update');
-        $api->delete('{id}', 'App\\Api\\V1\\Controllers\\CashBoxController@destroy');
+        $controller = 'App\\Api\\V1\\Controllers\\CashBoxController';
+        
+        $api->get('', '' . $controller . '@index');
+        $api->get('{id}', $controller . '@show');
+        $api->post('', $controller . '@store');
+        $api->put('{id}', $controller . '@update');
+        $api->delete('{id}', $controller . '@destroy');
+
+    });
+    $api->group(['prefix' => 'cash-boxes/{cashBoxId}/plans'], function (Router $api) {
+        $controller = 'App\\Api\\V1\\Controllers\\CashBoxBudgetPlanController';
+
+        $api->get('', '' . $controller . '@index');
+        $api->get('{cashBoxBudgetPlanId}', $controller . '@show');
+        $api->post('', $controller . '@store');
+        $api->put('{cashBoxBudgetPlanId}', $controller . '@update');
+        $api->delete('{cashBoxBudgetPlanId}', $controller . '@destroy');
     });
 
     $api->group(['middleware' => 'jwt.auth'], function (Router $api) {

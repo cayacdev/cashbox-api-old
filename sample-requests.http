@@ -61,3 +61,43 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/cash-boxes/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
+
+### Create a new Cashbox Budget Plan
+POST http://localhost:8080/api/cash-boxes/1/plans
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Budget Plan Test",
+  "cash_box_id": 1,
+  "budget": 100,
+  "start_date": "2020-08-01",
+  "end_date": "2020-08-31"
+}
+
+### Show cashbox budget plans from cashbox with id 1
+GET http://localhost:8080/api/cash-boxes/1/plans
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### Update Cashbox Budget Plan
+PUT http://localhost:8080/api/cash-boxes/1/plans/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Budget Plan Test",
+  "active": 1
+}
+
+### Show cashbox budget plan with id 1
+GET http://localhost:8080/api/cash-boxes/1/plans/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### Delete cashbox budget plan with id 1
+DELETE http://localhost:8080/api/cash-boxes/1/plans/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
