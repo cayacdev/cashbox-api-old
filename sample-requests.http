@@ -1,5 +1,5 @@
 ### Authorization by token, part 1. Retrieve and save token.
-POST http://localhost:8080/api/auth/signup
+POST {{domain}}/api/auth/signup
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Authorization by token, part 1. Retrieve and save token.
-POST http://localhost:8080/api/auth/login
+POST {{domain}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -20,17 +20,17 @@ Content-Type: application/json
 > {% client.global.set("auth_token", response.body.token); %}
 
 ### Authorization by token, part 2. Use token to authorize.
-GET http://localhost:8080/api/auth/me
+GET {{domain}}/api/auth/me
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Get all user related cashboxes
-GET http://localhost:8080/api/cash-boxes
+GET {{domain}}/api/cash-boxes
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Create a new Cashbox
-POST http://localhost:8080/api/cash-boxes
+POST {{domain}}/api/cash-boxes
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -41,13 +41,13 @@ Content-Type: application/json
 }
 
 ### Show cashbox with id 1
-GET http://localhost:8080/api/cash-boxes/1
+GET {{domain}}/api/cash-boxes/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 
 ### Update cashbox with id 1
-PUT http://localhost:8080/api/cash-boxes/1
+PUT {{domain}}/api/cash-boxes/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -58,12 +58,12 @@ Content-Type: application/json
 }
 
 ### Delete cashbox with id 1
-DELETE http://localhost:8080/api/cash-boxes/1
+DELETE {{domain}}/api/cash-boxes/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Create a new Cashbox Budget Plan
-POST http://localhost:8080/api/cash-boxes/1/plans
+POST {{domain}}/api/cash-boxes/1/plans
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -76,12 +76,12 @@ Content-Type: application/json
 }
 
 ### Show cashbox budget plans from cashbox with id 1
-GET http://localhost:8080/api/cash-boxes/1/plans
+GET {{domain}}/api/cash-boxes/1/plans
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Update Cashbox Budget Plan
-PUT http://localhost:8080/api/cash-boxes/1/plans/1
+PUT {{domain}}/api/cash-boxes/1/plans/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -91,22 +91,22 @@ Content-Type: application/json
 }
 
 ### Show cashbox budget plan with id 1
-GET http://localhost:8080/api/cash-boxes/1/plans/1
+GET {{domain}}/api/cash-boxes/1/plans/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Show active cashbox budget plan
-GET http://localhost:8080/api/cash-boxes/1/plans/active
+GET {{domain}}/api/cash-boxes/1/plans/active
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Delete cashbox budget plan with id 1
-DELETE http://localhost:8080/api/cash-boxes/1/plans/1
+DELETE {{domain}}/api/cash-boxes/1/plans/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Create a new Cashbox Budget Plan entry
-POST http://localhost:8080/api/cash-boxes/1/plans/1/entries
+POST {{domain}}/api/cash-boxes/1/plans/1/entries
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -118,7 +118,7 @@ Content-Type: application/json
 }
 
 ### Update Cashbox Budget Plan entry
-PUT http://localhost:8080/api/cash-boxes/1/plans/1/entries/1
+PUT {{domain}}/api/cash-boxes/1/plans/1/entries/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -130,6 +130,6 @@ Content-Type: application/json
 }
 
 ### Delete Cashbox Budget Plan entry
-DELETE http://localhost:8080/api/cash-boxes/1/plans/1/entries/1
+DELETE {{domain}}/api/cash-boxes/1/plans/1/entries/1
 Accept: application/json
 Authorization: Bearer {{auth_token}}
