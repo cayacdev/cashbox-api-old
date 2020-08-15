@@ -2,14 +2,40 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Class CashBoxBudgetPlan
+ *
  * @package App
+ * @property int $id
+ * @property int $cash_box_id
+ * @property string $name
+ * @property float $budget
+ * @property string $start_date
+ * @property string $end_date
+ * @property int $active
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read CashBox $cashBox
+ * @method static Builder|CashBoxBudgetPlan newModelQuery()
+ * @method static Builder|CashBoxBudgetPlan newQuery()
+ * @method static Builder|CashBoxBudgetPlan query()
+ * @method static Builder|CashBoxBudgetPlan whereActive($value)
+ * @method static Builder|CashBoxBudgetPlan whereBudget($value)
+ * @method static Builder|CashBoxBudgetPlan whereCashBoxId($value)
+ * @method static Builder|CashBoxBudgetPlan whereCreatedAt($value)
+ * @method static Builder|CashBoxBudgetPlan whereEndDate($value)
+ * @method static Builder|CashBoxBudgetPlan whereId($value)
+ * @method static Builder|CashBoxBudgetPlan whereName($value)
+ * @method static Builder|CashBoxBudgetPlan whereStartDate($value)
+ * @method static Builder|CashBoxBudgetPlan whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class CashBoxBudgetPlan extends Model
 {
