@@ -20,8 +20,8 @@ $api->version('v1', function (Router $api) {
 
     $api->group(['prefix' => 'cash-boxes'], function (Router $api) {
         $controller = 'App\\Api\\V1\\Controllers\\CashBoxController';
-        
-        $api->get('', '' . $controller . '@index');
+
+        $api->get('', $controller . '@index');
         $api->get('{id}', $controller . '@show');
         $api->post('', $controller . '@store');
         $api->put('{id}', $controller . '@update');
@@ -31,7 +31,8 @@ $api->version('v1', function (Router $api) {
     $api->group(['prefix' => 'cash-boxes/{cashBoxId}/plans'], function (Router $api) {
         $controller = 'App\\Api\\V1\\Controllers\\CashBoxBudgetPlanController';
 
-        $api->get('', '' . $controller . '@index');
+        $api->get('', $controller . '@index');
+        $api->get('active', $controller . '@activePlan');
         $api->get('{cashBoxBudgetPlanId}', $controller . '@show');
         $api->post('', $controller . '@store');
         $api->put('{cashBoxBudgetPlanId}', $controller . '@update');
@@ -52,12 +53,6 @@ $api->version('v1', function (Router $api) {
                     'message' => 'By accessing this endpoint, you can refresh your access token at each request. Check out this response headers!'
                 ]);
             }
-        ]);
-    });
-
-    $api->get('hello', function () {
-        return response()->json([
-            'message' => 'This is a simple example of item returned by your APIs. Everyone can see it.'
         ]);
     });
 });

@@ -70,7 +70,6 @@ Content-Type: application/json
 
 {
   "name": "Budget Plan Test",
-  "cash_box_id": 1,
   "budget": 100,
   "start_date": "2020-08-01",
   "end_date": "2020-08-31"
@@ -94,6 +93,11 @@ Content-Type: application/json
 
 ### Show cashbox budget plan with id 1
 GET http://localhost:8080/api/cash-boxes/1/plans/1
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### Show active cashbox budget plan
+GET http://localhost:8080/api/cash-boxes/1/plans/active
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 

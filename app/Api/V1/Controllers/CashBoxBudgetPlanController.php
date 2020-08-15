@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
-use App\Api\V1\Requests\CashBoxBudgetPlanUpdateRequest;
+use App\Api\V1\Requests\CashBoxBudgetPlanRequest;
 use App\CashBox;
 use App\CashBoxBudgetPlan;
 use App\Http\Controllers\Controller;
@@ -12,6 +12,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class CashBoxBudgetPlanController
+ * @package App\Api\V1\Controllers
+ */
 class CashBoxBudgetPlanController extends Controller
 {
     use Helpers;
@@ -45,11 +49,11 @@ class CashBoxBudgetPlanController extends Controller
      * Store a newly created resource in storage.
      *
      * @param string $cashBoxId
-     * @param CashBoxBudgetPlanUpdateRequest $request
+     * @param CashBoxBudgetPlanRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(string $cashBoxId, CashBoxBudgetPlanUpdateRequest $request)
+    public function store(string $cashBoxId, CashBoxBudgetPlanRequest $request)
     {
         $cashBox = CashBox::find($cashBoxId);
         $this->authorize('show', $cashBox);
@@ -57,6 +61,12 @@ class CashBoxBudgetPlanController extends Controller
         $plan = new CashBoxBudgetPlan($request->all());
 
         $plan->cashBox()->associate($cashBox);
+
+        $conflictedPlans = $plan->getConflictedPlans();
+        if ($conflictedPlans->count() > 0) {
+            throw new HttpException(400, 'The plan overlaps with other plans');
+        }
+
         if (!$plan->save()) {
             throw new HttpException(500);
         }
@@ -83,13 +93,19 @@ class CashBoxBudgetPlanController extends Controller
      *
      * @param string $cashBoxId
      * @param string $cashBoxBudgetPlanId
-     * @param CashBoxBudgetPlanUpdateRequest $request
+     * @param CashBoxBudgetPlanRequest $request
      * @return \Dingo\Api\Http\Response
      * @throws AuthorizationException
      */
-    public function update(string $cashBoxId, string $cashBoxBudgetPlanId, CashBoxBudgetPlanUpdateRequest $request)
+    public function update(string $cashBoxId, string $cashBoxBudgetPlanId, CashBoxBudgetPlanRequest $request)
     {
         $plan = $this->getPlanThroughCashBox($cashBoxId, 'update', $cashBoxBudgetPlanId);
+
+        $conflictedPlans = $plan->getConflictedPlans();
+        if ($conflictedPlans->count() > 0) {
+            throw new HttpException(400, 'The plan overlaps with other plans');
+        }
+        
         if (!$plan->update($request->all())) {
             throw new HttpException(500);
         }
@@ -113,6 +129,27 @@ class CashBoxBudgetPlanController extends Controller
         }
 
         return $this->response->noContent();
+    }
+
+    /**
+     * Get the active plan for the given cash box
+     *
+     * @param string $cashBoxId
+     * @return \Dingo\Api\Http\Response|JsonResponse
+     * @throws AuthorizationException
+     */
+    public function activePlan(string $cashBoxId)
+    {
+        $cashBox = CashBox::find($cashBoxId);
+        $this->authorize('show', $cashBox);
+
+        $activePlan = $cashBox->getActivePlan()->first();
+
+        if ($activePlan) {
+            return response()->json($activePlan);
+        } else {
+            return $this->response->noContent();
+        }
     }
 
     /**

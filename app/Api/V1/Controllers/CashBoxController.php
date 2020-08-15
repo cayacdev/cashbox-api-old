@@ -5,7 +5,6 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Requests\CashBoxRequest;
 use App\CashBox;
 use App\Http\Controllers\Controller;
-use App\User;
 use Dingo\Api\Http\Response;
 use Dingo\Api\Routing\Helpers;
 use Exception;
@@ -13,6 +12,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class CashBoxController
+ * @package App\Api\V1\Controllers
+ */
 class CashBoxController extends Controller
 {
     use Helpers;
@@ -34,7 +37,6 @@ class CashBoxController extends Controller
      */
     public function index()
     {
-        /* @var $user User */
         $user = $this->user();
 
         return response()->json($user->cashBoxes()->get());
