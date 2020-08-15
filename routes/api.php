@@ -39,6 +39,14 @@ $api->version('v1', function (Router $api) {
         $api->delete('{cashBoxBudgetPlanId}', $controller . '@destroy');
     });
 
+    $api->group(['prefix' => 'cash-boxes/{cashBoxId}/plans/{cashBoxBudgetPlanId}/entries'], function (Router $api) {
+        $controller = 'App\\Api\\V1\\Controllers\\CashBoxBudgetPlanEntryController';
+
+        $api->post('', $controller . '@store');
+        $api->put('{entryId}', $controller . '@update');
+        $api->delete('{entryId}', $controller . '@destroy');
+    });
+
     $api->group(['middleware' => 'jwt.auth'], function (Router $api) {
         $api->get('protected', function () {
             return response()->json([

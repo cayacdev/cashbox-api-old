@@ -34,6 +34,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CashBoxBudgetPlan whereStartDate($value)
  * @method static Builder|CashBoxBudgetPlan whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $active
+ * @method static Builder|CashBoxBudgetPlan whereActive($value)
  */
 class CashBoxBudgetPlan extends Model
 {

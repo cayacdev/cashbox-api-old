@@ -2,13 +2,15 @@
 
 namespace App\Api\V1\Controllers;
 
-use Config;
-use App\User;
-use Tymon\JWTAuth\JWTAuth;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Password;
 use App\Api\V1\Requests\ResetPasswordRequest;
+use App\Http\Controllers\Controller;
+use App\User;
+use Config;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Tymon\JWTAuth\JWTAuth;
 
 class ResetPasswordController extends Controller
 {
@@ -16,15 +18,15 @@ class ResetPasswordController extends Controller
     {
         $response = $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
-                $this->reset($user, $password);
-            }
+            $this->reset($user, $password);
+        }
         );
 
-        if($response !== Password::PASSWORD_RESET) {
+        if ($response !== Password::PASSWORD_RESET) {
             throw new HttpException(500);
         }
 
-        if(!Config::get('boilerplate.reset_password.release_token')) {
+        if (!Config::get('boilerplate.reset_password.release_token')) {
             return response()->json([
                 'status' => 'ok',
             ]);
@@ -41,7 +43,7 @@ class ResetPasswordController extends Controller
     /**
      * Get the broker to be used during password reset.
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return PasswordBroker
      */
     public function broker()
     {
@@ -51,7 +53,7 @@ class ResetPasswordController extends Controller
     /**
      * Get the password reset credentials from the request.
      *
-     * @param  ResetPasswordRequest  $request
+     * @param ResetPasswordRequest $request
      * @return array
      */
     protected function credentials(ResetPasswordRequest $request)
@@ -64,8 +66,8 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
+     * @param CanResetPassword $user
+     * @param string $password
      * @return void
      */
     protected function reset($user, $password)

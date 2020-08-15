@@ -105,7 +105,7 @@ class CashBoxBudgetPlanController extends Controller
         if ($conflictedPlans->count() > 0) {
             throw new HttpException(400, 'The plan overlaps with other plans');
         }
-        
+
         if (!$plan->update($request->all())) {
             throw new HttpException(500);
         }
