@@ -19,14 +19,12 @@ use Illuminate\Support\Carbon;
  * @property float $budget
  * @property string $start_date
  * @property string $end_date
- * @property int $active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read CashBox $cashBox
  * @method static Builder|CashBoxBudgetPlan newModelQuery()
  * @method static Builder|CashBoxBudgetPlan newQuery()
  * @method static Builder|CashBoxBudgetPlan query()
- * @method static Builder|CashBoxBudgetPlan whereActive($value)
  * @method static Builder|CashBoxBudgetPlan whereBudget($value)
  * @method static Builder|CashBoxBudgetPlan whereCashBoxId($value)
  * @method static Builder|CashBoxBudgetPlan whereCreatedAt($value)

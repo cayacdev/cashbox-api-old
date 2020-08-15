@@ -20,7 +20,6 @@ class CreateCashboxBudgetPlans extends Migration
             $table->double('budget', 8, 2);
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('active')->default(false);
             $table->timestamps();
 
             $table->foreign('cash_box_id')->references('id')->on('cash_boxes');
