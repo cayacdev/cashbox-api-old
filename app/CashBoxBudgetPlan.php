@@ -48,6 +48,13 @@ class CashBoxBudgetPlan extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * @return BelongsTo
      */
     public function cashBox()
@@ -66,20 +73,44 @@ class CashBoxBudgetPlan extends Model
     /**
      * @return HasMany
      */
-    public function getConflictedPlans(): HasMany
+    public function entries()
     {
+        return $this->hasMany('App\CashBoxBudgetPlanEntry');
+    }
+
+    /**
+     * @param null $expectId
+     * @return HasMany
+     */
+    public function getConflictedPlans($expectId = null): HasMany
+    {
+        /**
+         * @var $plans HasMany
+         */
         $plans = $this->cashBox()->first()->budgetPlans();
 
-        return $plans->where(function ($query) {
+        $conflictedPlans = $plans->where(function ($query) {
+            /**
+             * @var $query Builder
+             */
             $query
                 ->whereBetween('start_date', [$this->start_date, $this->end_date])
                 ->orWhereBetween('end_date', [$this->start_date, $this->end_date])
                 ->orWhere(function ($query) {
+                    /**
+                     * @var $query Builder
+                     */
                     $query
                         ->where('start_date', '<', $this->start_date)
                         ->where('end_date', '>', $this->end_date);
                 });
         });
+
+        if ($expectId) {
+            $conflictedPlans->where('id', '<>', $expectId);
+        }
+
+        return $conflictedPlans;
     }
 
     /**

@@ -85,7 +85,7 @@ class CashBoxBudgetPlanController extends Controller
     public function show(string $cashBoxId, string $cashBoxBudgetPlanId)
     {
         $plan = $this->getPlanThroughCashBox($cashBoxId, 'show', $cashBoxBudgetPlanId);
-        return response()->json($plan);
+        return response()->json($plan->load('entries.user'));
     }
 
     /**
@@ -101,7 +101,7 @@ class CashBoxBudgetPlanController extends Controller
     {
         $plan = $this->getPlanThroughCashBox($cashBoxId, 'update', $cashBoxBudgetPlanId);
 
-        $conflictedPlans = $plan->getConflictedPlans();
+        $conflictedPlans = $plan->getConflictedPlans($cashBoxBudgetPlanId);
         if ($conflictedPlans->count() > 0) {
             throw new HttpException(400, 'The plan overlaps with other plans');
         }
@@ -146,7 +146,7 @@ class CashBoxBudgetPlanController extends Controller
         $activePlan = $cashBox->getActivePlan()->first();
 
         if ($activePlan) {
-            return response()->json($activePlan);
+            return response()->json($activePlan->load('entries.user'));
         } else {
             return $this->response->noContent();
         }
